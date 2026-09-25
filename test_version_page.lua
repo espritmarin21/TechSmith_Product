@@ -1,21 +1,23 @@
 -- test_version_page.lua
--- صفحة تجريبية للتحقق من إصدار Camtasia
+-- صفحة للتحقق من إصدار Camtasia باستخدام File.Download (AutoPlay)
 
-local http = require("socket.http")
-local ltn12 = require("ltn12")
-local json = require("dkjson")
-
---- دالة لجلب محتوى HTML من URL
+--- دالة لجلب محتوى HTML من URL باستخدام File.Download
 local function fetchHTML(url)
-    local response_body = {}
-    local res, code, headers, status = http.request{
-        url = url,
-        sink = ltn12.sink.table(response_body)
-    }
-    if not res or code ~= 200 then
-        return nil, code or "request_failed"
+    local tempFile = File.GetTemp() .. "\\version_check.html"
+    
+    -- تنزيل الصفحة إلى ملف مؤقت
+    local success = File.Download(url, tempFile)
+    if not success then
+        return nil, "download_failed"
     end
-    return table.concat(response_body)
+    
+    -- قراءة المحتوى
+    local content = File.GetText(tempFile)
+    
+    -- حذف الملف المؤقت
+    File.Delete(tempFile)
+    
+    return content
 end
 
 --- دالة لاستخراج آخر إصدار Camtasia 2026 من صفحة TechSmith
