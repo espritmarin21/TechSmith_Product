@@ -3,7 +3,7 @@
 
 --- دالة لجلب محتوى HTML من URL باستخدام File.Download
 local function fetchHTML(url)
-    local tempFile = File.GetTemp() .. "\\version_check.html"
+    local tempFile = File.GetTempFolder() .. "\\version_check.html"
     
     -- تنزيل الصفحة إلى ملف مؤقت
     local success = File.Download(url, tempFile)
