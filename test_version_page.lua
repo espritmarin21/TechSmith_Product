@@ -88,6 +88,7 @@ function CheckForCamtasiaUpdate()
     end
 end
 
--- مثال للاستخدام (يمكنك استدعاؤه من صفحتك):
--- local result = CheckForCamtasiaUpdate()
--- Dialog.Message(result.message, "تحقق الإصدار")
+-- استدعاء الدالة تلقائيًا عند تحميل الصفحة
+_G.LocalCamtasiaVersionNum = _G.LocalCamtasiaVersionNum or 2622
+local result = CheckForCamtasiaUpdate()
+Dialog.Message(result.message, "Camtasia Version Check")
